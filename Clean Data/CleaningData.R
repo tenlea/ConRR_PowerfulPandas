@@ -57,6 +57,7 @@ final_data$Belief[final_data$Belief=="N"]=0
 final_data$Belief[final_data$Belief=="Y"]=1
 
 unique(final_data$Smoker)
+#fixinfg Smoker
 final_data$Smoker[final_data$Smoker=="Current"]=1
 final_data$Smoker[final_data$Smoker=="Y"]=1
 final_data$Smoker[final_data$Smoker=="N"]=0
