@@ -136,10 +136,10 @@ Then we created a regression to see how an individuals overall health effects th
 
 ## Secondary Question: Data Analysis
 ```{r pressure4}
-prop.table(xtabs(~H$Physical))# prevalence of physical health alone 
-prop.table(xtabs(~H$Mental))# prevalence of mental health alone 
-prop.table(xtabs(~Physical+Mental,H))# prevalence of both MH and PH 
-prop.table(xtabs(~H$Belief))
+#prop.table(xtabs(~H$Physical))# prevalence of physical health alone 
+#prop.table(xtabs(~H$Mental))# prevalence of mental health alone 
+#prop.table(xtabs(~Physical+Mental,H))# prevalence of both MH and PH 
+#prop.table(xtabs(~H$Belief))
 ```
 
 ## Secondary Question: Results
