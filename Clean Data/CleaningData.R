@@ -31,3 +31,32 @@ B_data$ID <- sprintf("%s%03d", B_data$Region, seq_len(nrow(B_data)))
 P_data$ID <- sprintf("%s%03d", P_data$Region, seq_len(nrow(P_data)))
 
 final_data=rbind(A_data,B_data,P_data,SE_data,H_data)
+
+unique(final_data$MH)
+
+final_data$MH[final_data$MH=="No"]=0
+final_data$MH[final_data$MH=="Yes"]=1
+final_data$MH[final_data$MH=="N"]=0
+final_data$MH[final_data$MH=="Y"]=1
+
+unique(final_data$MH)
+
+final_data$PH[final_data$PH=="No"]=0
+final_data$PH[final_data$PH=="Yes"]=1
+final_data$PH[final_data$PH=="N"]=0
+final_data$PH[final_data$PH=="Y"]=1
+final_data$PH[final_data$PH=="NO"]=0
+final_data$PH[final_data$PH=="YES"]=1
+
+unique(final_data$PH)
+unique(final_data$Belief)
+
+final_data$Belief[final_data$Belief=="No"]=0
+final_data$Belief[final_data$Belief=="Yes"]=1
+final_data$Belief[final_data$Belief=="N"]=0
+final_data$Belief[final_data$Belief=="Y"]=1
+
+unique(final_data$Smoker)
+final_data$Smoker[final_data$Smoker=="Current"]=1
+final_data$Smoker[final_data$Smoker=="Y"]=1
+final_data$Smoker[final_data$Smoker=="N"]=0
