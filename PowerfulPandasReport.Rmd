@@ -1,0 +1,60 @@
+---
+title: "Powerful Pandas Project"
+author: "Tenlea, Promise and Daniel"
+date: "2025-12-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Research Questions
+
+Primary: Conduct a binomial regression (hint: glm() function) to assess whether individuals with on-going health issues believe their condition will get worse while waiting for treatment.
+
+Secondary: Assess the prevalence of health issues in the cohort (adjusting for other factors?).
+
+Sample Validation: Assess how representative the sample is compared to the population.
+
+## Data Cleaning
+
+We had set of data. We binded the data by matching the column names and matching the values in each column.
+
+```{r cars}
+summary(cars)
+```
+
+## Primary Question: Data Analysis
+
+To answer our primary question be conducted three different logistic regressions. First we fit our null model to the outcome of whether a patient believed their outcome would get worse.
+
+```{r pressure}
+#hi
+```
+
+Then we created a regression to see how an individuals mental health effects that belief. The code is as follows:
+
+```{r pressure1}
+#hi
+```
+
+Then we created a regression to see how an individuals physical health effects that belief. The code is as follows:
+
+
+```{r pressure2}
+#hi
+```
+
+Then we created a regression to see how an individuals overall health effects that belief. If a patient had either poor mental health or phsyical health, they were classified as poor health overall. The code is as follows:
+
+```{r pressure3}
+#hi
+```
+## Primary Question: Results
+
+## Secondary Question: Data Analysis
+
+
+## Secondary Question: Results
+
+## Sample Validations
