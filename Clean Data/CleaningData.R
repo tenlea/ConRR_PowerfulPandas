@@ -1,6 +1,3 @@
-#This is our R script to clean data
-
-install.packages("openxlsx")
 library(openxlsx)
 
 #loading the data
@@ -22,7 +19,6 @@ H_data$Smoker = NA
 H_data$SES5 = NA 
 class(SE_data$Region)
 H_data$Region = as.character("H")
-
 
 
 #Addjng ID to each person
@@ -57,7 +53,11 @@ final_data$Belief[final_data$Belief=="N"]=0
 final_data$Belief[final_data$Belief=="Y"]=1
 
 unique(final_data$Smoker)
+
 #fixinfg Smoker
 final_data$Smoker[final_data$Smoker=="Current"]=1
 final_data$Smoker[final_data$Smoker=="Y"]=1
 final_data$Smoker[final_data$Smoker=="N"]=0
+
+final_data$Belief <- as.numeric(final_data$Belief)
+final_data$Smoker <- as.numeric(final_data$Smoker)
