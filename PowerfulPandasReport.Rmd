@@ -1,0 +1,147 @@
+---
+title: "Powerful Pandas Project"
+author: "Wonderful People"
+date: "2025-12-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Research Questions
+
+Primary: Conduct a binomial regression (hint: glm() function) to assess whether individuals with on-going health issues believe their condition will get worse while waiting for treatment.
+
+Secondary: Assess the prevalence of health issues in the cohort (adjusting for other factors?).
+
+Sample Validation: Assess how representative the sample is compared to the population.
+
+## Data Cleaning
+Put all data sets in Raw_Data folder and call your own data set H.csv
+
+We had set of data. We binded the data by matching the column names and matching the values in each column.
+
+```{r cars}
+#This is our R script to clean data
+
+#install.packages("openxlsx")
+library(openxlsx)
+
+#loading the data
+A_data=read.xlsx("Raw_Data/A.xlsx")
+B_data=read.xlsx("Raw_Data/B.xlsx")
+P_data=read.xlsx("Raw_Data/P.xlsx")
+SE_data=read.xlsx("Raw_Data/SouthEast.xlsx")
+H_data=read.csv("Raw_Data/H.csv")
+
+#Making column names consistent
+names(SE_data)[names(SE_data) == "Phusical"] <- "PH"
+names(SE_data)[names(SE_data) == "Mental"] <- "MH"
+names(H_data)[names(H_data) == "Physical"] <- "PH"
+names(H_data)[names(H_data) == "Mental"] <- "MH"
+names(H_data)[names(H_data) == "Name"] <- "ID"
+
+#Adding unfilled columns to H
+H_data$Smoker = NA 
+H_data$SES5 = NA 
+class(SE_data$Region)
+H_data$Region = as.character("H")
+
+
+
+#Addjng ID to each person
+A_data$ID <- sprintf("%s%03d", A_data$Region, seq_len(nrow(A_data)))
+B_data$ID <- sprintf("%s%03d", B_data$Region, seq_len(nrow(B_data)))
+P_data$ID <- sprintf("%s%03d", P_data$Region, seq_len(nrow(P_data)))
+
+final_data=rbind(A_data,B_data,P_data,SE_data,H_data)
+
+unique(final_data$MH)
+
+final_data$MH[final_data$MH=="No"]=0
+final_data$MH[final_data$MH=="Yes"]=1
+final_data$MH[final_data$MH=="N"]=0
+final_data$MH[final_data$MH=="Y"]=1
+
+unique(final_data$MH)
+
+final_data$PH[final_data$PH=="No"]=0
+final_data$PH[final_data$PH=="Yes"]=1
+final_data$PH[final_data$PH=="N"]=0
+final_data$PH[final_data$PH=="Y"]=1
+final_data$PH[final_data$PH=="NO"]=0
+final_data$PH[final_data$PH=="YES"]=1
+
+unique(final_data$PH)
+unique(final_data$Belief)
+
+final_data$Belief[final_data$Belief=="No"]=0
+final_data$Belief[final_data$Belief=="Yes"]=1
+final_data$Belief[final_data$Belief=="N"]=0
+final_data$Belief[final_data$Belief=="Y"]=1
+
+unique(final_data$Smoker)
+#fixinfg Smoker
+final_data$Smoker[final_data$Smoker=="Current"]=1
+final_data$Smoker[final_data$Smoker=="Y"]=1
+final_data$Smoker[final_data$Smoker=="N"]=0
+
+final_data$Belief <- as.numeric(final_data$Belief)
+final_data$Smoker <- as.numeric(final_data$Smoker)
+```
+
+## Primary Question: Data Analysis
+
+To answer our primary question be conducted three different logistic regressions. First we fit our null model to the outcome of whether a patient believed their outcome would get worse.
+
+```{r pressure}
+Data<-final_data
+#Fit the null model of belief that condition will get worse
+#fit_null<-glm(Belief~1,data=Data,family="binomial")
+#summary(fit_null)
+#confint(fit_null)
+```
+
+Then we created a regression to see how an individuals mental health effects that belief. The code is as follows:
+
+```{r pressure1}
+
+#Fit the logistic regression model for mh effect on belief 
+fitMH <- glm(Belief~MH,data=Data,family="binomial")
+coef_summary <- summary(fitMH)
+coefficients <- coef(fitMH)
+p_values <- coef_summary$coefficients[, "Pr(>|z|)"]
+conf_int <- confint(fitMH)
+summary(fitMH)
+```
+
+Then we created a regression to see how an individuals physical health effects that belief. The code is as follows:
+
+
+```{r pressure2}
+fitPH <- glm(Belief~PH,data=Data,family="binomial")
+coef_summary <- summary(fitPH)
+coefficients <- coef(fitPH)
+p_values <- coef_summary$coefficients[, "Pr(>|z|)"]
+conf_int <- confint(fitPH)
+summary(fitPH)
+```
+
+Then we created a regression to see how an individuals overall health effects that belief. If a patient had either poor mental health or phsyical health, they were classified as poor health overall. The code is as follows:
+
+```{r pressure3}
+#hi
+```
+## Primary Question: Results
+
+## Secondary Question: Data Analysis
+```{r pressure4}
+#prop.table(xtabs(~H$Physical))# prevalence of physical health alone 
+#prop.table(xtabs(~H$Mental))# prevalence of mental health alone 
+#prop.table(xtabs(~Physical+Mental,H))# prevalence of both MH and PH 
+#prop.table(xtabs(~H$Belief))
+```
+
+## Secondary Question: Results
+
+## Sample Validations
