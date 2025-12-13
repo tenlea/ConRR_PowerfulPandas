@@ -1,0 +1,80 @@
+---
+title: "Powerful Pandas Project"
+author: "Wonderful People"
+date: "2025-12-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Research Questions
+
+Primary: Conduct a binomial regression (hint: glm() function) to assess whether individuals with on-going health issues believe their condition will get worse while waiting for treatment.
+
+Secondary: Assess the prevalence of health issues in the cohort (adjusting for other factors?).
+
+Sample Validation: Assess how representative the sample is compared to the population.
+
+## Data Cleaning
+Put all data sets in Raw_Data folder and call your own data set H.csv
+
+We had set of data. We binded the data by matching the column names and matching the values in each column.
+
+```{r cars}
+#This is our R script to clean data
+final_data <- readRDS("Clean Data/final_Data.rds")
+Data <- final_data
+
+```
+
+## Primary Question: Data Analysis
+
+
+Then we created a non-adjusted regression model to see the effects of mental and physical health on beliefs. The code is as follows:
+
+```{r pressure1}
+
+#Fit the logistic regression model for PH and MH effect on belief, without adjustment
+non_adjusted <- glm(Belief~MH+PH,data=Data,family="binomial")
+coef_summary <- summary(non_adjusted)
+coefficients <- coef(non_adjusted)
+p_values <- coef_summary$coefficients[, "Pr(>|z|)"]
+conf_int <- confint(non_adjusted)
+summary(non_adjusted)
+```
+
+We see that MH is significant with a pval of `r p_values[2]`, decreasing belief, however, PH is not significant
+
+Then we created a regression to see how an individuals physical health effects that belief. The code is as follows:
+
+
+```{r pressure2}
+adjusted <- glm(Belief~PH+MH+Age + factor(SES5),data=Data,family="binomial")
+coef_summary <- summary(adjusted)
+coefficients <- coef(adjusted)
+p_values <- coef_summary$coefficients[, "Pr(>|z|)"]
+conf_int <- confint(adjusted)
+summary(adjusted)
+```
+
+After adjusting for age and SES, we find that MH is again significant in reducing belief with pval of `r p_values[3]`. Again PH is not significant and interestingly, the only significant SES5 level relative to L1 was L3, which reduced belied with a pval of `r p_values[6]`
+
+Then we created a regression to see how an individuals overall health effects that belief. If a patient had either poor mental health or phsyical health, they were classified as poor health overall. The code is as follows:
+
+```{r pressure3}
+#hi
+```
+## Primary Question: Results
+
+## Secondary Question: Data Analysis
+```{r pressure4}
+#prop.table(xtabs(~H$Physical))# prevalence of physical health alone 
+#prop.table(xtabs(~H$Mental))# prevalence of mental health alone 
+#prop.table(xtabs(~Physical+Mental,H))# prevalence of both MH and PH 
+#prop.table(xtabs(~H$Belief))
+```
+
+## Secondary Question: Results
+
+## Sample Validations

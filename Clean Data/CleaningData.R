@@ -1,3 +1,4 @@
+renv::restore()
 library(openxlsx)
 
 #loading the data
@@ -54,10 +55,12 @@ final_data$Belief[final_data$Belief=="Y"]=1
 
 unique(final_data$Smoker)
 
-#fixinfg Smoker
+#fixing Smoker
 final_data$Smoker[final_data$Smoker=="Current"]=1
 final_data$Smoker[final_data$Smoker=="Y"]=1
 final_data$Smoker[final_data$Smoker=="N"]=0
 
 final_data$Belief <- as.numeric(final_data$Belief)
 final_data$Smoker <- as.numeric(final_data$Smoker)
+
+saveRDS(final_data, "Clean Data/final_Data.rds")
